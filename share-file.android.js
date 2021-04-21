@@ -68,17 +68,14 @@ var ShareFile = (function () {
     };
     ShareFile.prototype._getUriForAssetPath = function (path, fileName, ctx) {
         path = path.replace("file://", "/");
-        if (!fs.File.exists(path)) {
-            console.log("File does not exist: " + path);
-            return null;
-        }
-        var localFile = fs.File.fromPath(path);
-        var localFileContents = localFile.readSync(function (e) { console.log(e); });
-        var cacheFileName = this._writeBytesToFile(ctx, fileName, localFileContents);
-        if (cacheFileName.indexOf("file://") === -1) {
-            cacheFileName = "file://" + cacheFileName;
-        }
-        return android.net.Uri.parse(cacheFileName);
+        var file = new java.io.File(path);
+
+        return androidx.core.content.FileProvider.getUriForFile(
+          application.android.foregroundActivity ||
+          application.android.startActivity,
+          application.android.packageName + ".fileprovider",
+          file
+      );
     };
     ShareFile.prototype._getUriForBase64Content = function (path, fileName, ctx) {
         var resData = path.substring(path.indexOf("://") + 3);
