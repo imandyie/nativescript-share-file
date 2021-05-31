@@ -1,5 +1,5 @@
-import * as application from 'tns-core-modules/application';
-import * as fs from 'tns-core-modules/file-system';
+import * as application from '@nativescript/core/application';
+import * as fs from '@nativescript/core/file-system';
 
 export class ShareFile {
     open(args: any): void {

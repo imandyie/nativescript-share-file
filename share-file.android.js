@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var application = require("tns-core-modules/application");
-var fs = require("tns-core-modules/file-system");
+var application = require("@nativescript/core/application");
+var fs = require("@nativescript/core/file-system");
 var ShareFile = (function () {
     function ShareFile() {
     }
