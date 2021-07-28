@@ -69,13 +69,8 @@ var ShareFile = (function () {
     ShareFile.prototype._getUriForAssetPath = function (path, fileName, ctx) {
         path = path.replace("file://", "/");
         var file = new java.io.File(path);
-
-        return androidx.core.content.FileProvider.getUriForFile(
-          application.android.foregroundActivity ||
-          application.android.startActivity,
-          application.android.packageName + ".fileprovider",
-          file
-      );
+        return androidx.core.content.FileProvider.getUriForFile(application.android.foregroundActivity ||
+            application.android.startActivity, application.android.packageName + ".fileprovider", file);
     };
     ShareFile.prototype._getUriForBase64Content = function (path, fileName, ctx) {
         var resData = path.substring(path.indexOf("://") + 3);

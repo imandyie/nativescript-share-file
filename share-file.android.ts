@@ -67,17 +67,14 @@ export class ShareFile {
       }
        _getUriForAssetPath(path, fileName, ctx) {
         path = path.replace("file://", "/");
-        if (!fs.File.exists(path)) {
-          console.log("File does not exist: " + path);
-          return null;
-        }
-        let localFile = fs.File.fromPath(path);
-        let localFileContents = localFile.readSync(function(e) { console.log(e); });
-        let cacheFileName = this._writeBytesToFile(ctx, fileName, localFileContents);
-        if (cacheFileName.indexOf("file://") === -1) {
-          cacheFileName = "file://" + cacheFileName;
-        }
-        return android.net.Uri.parse(cacheFileName);
+        var file = new java.io.File(path);
+
+        return androidx.core.content.FileProvider.getUriForFile(
+          application.android.foregroundActivity ||
+          application.android.startActivity,
+          application.android.packageName + ".fileprovider",
+          file
+        );
       }
        _getUriForBase64Content(path, fileName, ctx) {
         let resData = path.substring(path.indexOf("://") + 3);
